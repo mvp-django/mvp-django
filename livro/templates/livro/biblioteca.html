@@ -91,18 +91,22 @@
         <div class="row">
 
             {% for livro in shelf %}
-            <div class="col-md-3">
+            <div class="col-md-3" style="padding-bottom: 30px;">
 
-                <div class="card h-100 mt-20" style="margin-bottom:5px">
-                    <img class="panel-img" src="{{ livro.figura.url }}" alt="book cover" width="250px" height="250px">
-                    <div class="card-body">
+                <div class="card h-100 mt-20">
+                    <img class="panel-img" src="{{ livro.figura.url }}" alt="book cover" width="306px" height="250px">
+                    <div class="card-body" style="padding-bottom: 0px;">
                         <h3>{{ livro.nome }}</h3>
                         <h6>{{ livro.autor }}</h6>
-                        <p>{{ livro.descricao|truncatechars:50}}</p>
-                        <a href="update/{{livro.id}}" class="btn btn-warning">Edit</a>
-                        <a href="delete/{{livro.id}}" class="btn btn-danger">Delete</a>
-                        <a href="download/{{livro.id}}" class="btn btn-success">Download</a>
+                        <p>{{ livro.descricao|truncatechars:70}}</p>
                     </div>
+                    {% if user.is_authenticated %}
+                        <div class="card-footer bg-transparent">
+                            <a href="update/{{livro.id}}" class="btn btn-warning">Edit</a>
+                            <a href="delete/{{livro.id}}" class="btn btn-danger">Delete</a>
+                            <a href="download/{{livro.id}}" class="btn btn-success">Download</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 

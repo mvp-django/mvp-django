@@ -1,6 +1,6 @@
 {% extends 'livro/biblioteca.html' %}
 {% block content %}
-    <center>
+<center>
     <h1 class="display-3" style="background-color:#000000;color:#FFFF99;">Upload Livros</h1>
     <form method = 'POST' enctype="multipart/form-data">
         {% csrf_token %}
@@ -12,7 +12,7 @@
             </tr>
             {% endfor %}
         </table>
-        <button type="submit" class="btn btn-lg btn-warning">Submit</button>
+        <button type="submit" class="btn btn-lg btn-warning">Enviar</button>
     </form>
 </center>
 {% endblock %}

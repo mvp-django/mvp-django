@@ -7,6 +7,8 @@ urlpatterns = [
     path('upload/', views.upload, name = 'upload-livro'),
     path('update/<int:livro_id>', views.update_livro),
     path('delete/<int:livro_id>', views.delete_livro),
+    path('download/<int:livro_id>', views.download),
+
     
 ]
 #DataFlair

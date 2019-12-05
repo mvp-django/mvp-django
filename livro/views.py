@@ -39,3 +39,9 @@ def delete_livro(request, livro_id):
         return redirect('index')
     livro_sel.delete()
     return redirect('index')
+
+
+def error_404(request, exception):
+    data = {}
+    print("pasou")
+    return render(request,'error_404.html', data)

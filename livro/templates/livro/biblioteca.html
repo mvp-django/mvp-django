@@ -1,11 +1,139 @@
 <!DOCTYPE html>
-{% load static %}
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca DC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark bg-faded">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Livros</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'upload-livro' %}" class="nav-link">Upload de Livros</a>
+                </li>
+                <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li> -->
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <a class="navbar-brand mx-auto" href="#">Biblioteca DC</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <p class="nav-link" href="#">Olá, {{ user.username }}, seja bem vindo!</p>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Sair</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <p class="nav-link" href="#">Olá, visitante, seja bem vindo!</p>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+        <!-- <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                                <p class="">
+                                    Olá {{ user.username }} seja bem vindo!
+                                    <span class="sair"><a href="{% url 'logout' %}">Sair</a></span>
+                                </p>
+                              </li>
+                        {% endif %}
+                    </ul>
+                </div> -->
+    </nav>
+
+
+    <!-- partial:index.partial.html -->
+    <!-- <nav class="navbar navbar-inverse bg-faded">
+  <a class="navbar-brand" href="/">Biblioteca</a>
+  <ul class="nav navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="/">Livros <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Videos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Apps</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">About</a>
+    </li>
+  </ul>
+
+</nav>   -->
+
+    {% block content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            {% for livro in shelf %}
+            <div class="col-md-3">
+
+                <div class="card h-100 mt-20" style="margin-bottom:5px">
+                    <img class="panel-img" src="{{ livro.figura.url }}" alt="book cover" width="250px" height="250px">
+                    <div class="card-body">
+                        <h3>{{ livro.nome }}</h3>
+                        <h6>{{ livro.autor }}</h6>
+                        <p>{{ livro.descricao|truncatechars:50}}</p>
+                        <a href="update/{{livro.id}}" class="btn btn-warning">Edit</a>
+                        <a href="delete/{{livro.id}}" class="btn btn-danger">Delete</a>
+                        <a href="download/{{livro.id}}" class="btn btn-success">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        
+                    </div>
+                </div>
+            </div> -->
+            {% endfor %}
+
+
+        </div>
+        {% endblock %}
+        <!-- partial -->
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+</body>
+
+</html>
+
+
+
+<!DOCTYPE html>
+<!-- <html>
 <head>
     <title>Biblioteca DC</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 {% if user.is_authenticated %}
+    {{ user.get_all_permissions }}
     <li class="nav-item">
       <p class="logged-in-p">
           Olá {{ user.username }} seja bem vindo!
@@ -21,30 +149,14 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
     <a href="{% url 'upload-livro' %}" class="navbar-link btn-lg" style="background-color:#FFCC33;color:#000000;">Upload Livros</a>
 </nav>
 <br>
-{% block content %}
+{#% block content %#}
 <div class="card-columns">
-    {% for livro in shelf %}
-    <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="{{ livro.figura.url }}">
-  <div class="card-body">
-    <h5 class="card-title">{{ livro.nome }}</h5>
-    <p class="card-text">{{ livro.descricao }}</p>
-   <div class="card-footer bg-transparent border-dark">
-   <p class="card-title">{{livro.autor}}</p>
-   <center>
-       <a href="update/{{livro.id}}" class="btn btn-warning" id = '{{livro.id}}'>edit</a>
-       <a href="delete/{{livro.id}}" class="btn btn-danger" id = '{{update_livro.id}}'>delete</a>
-    </center>
-    </div>
-  </div>
 </div>
-    {% endfor %}
-</div>
-{% endblock %}
+{#% endblock %#}
 </body>
 {% else %}
     <li class="nav-item">
         <a class="nav-link" href="{% url 'login' %}">Login</a>
     </li>
 {% endif %}
-</html>
+</html> -->

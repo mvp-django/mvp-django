@@ -1,87 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'livro/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Biblioteca DC</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark bg-faded">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Livros</a>
-                </li>
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a href="{% url 'upload-livro' %}" class="nav-link">Upload de Livros</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-        <div class="mx-auto order-0">
-            <a class="navbar-brand mx-auto" href="#">Biblioteca DC</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <p class="nav-link" href="#">Olá, {{ user.username }}, seja bem vindo!</p>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Sair</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <p class="nav-link" href="#">Olá, visitante, seja bem vindo!</p>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-                {% endif %}
-
-            </ul>
-        </div>
-    </nav>
-    {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-
-            {% for livro in shelf %}
+{% block content %}
+    <div class="row">
+        {% for livro in shelf %}
             <div class="col-md-3" style="padding-bottom: 30px;">
-
                 <div class="card h-100 mt-20">
-                    <img class="panel-img" src="{{ livro.figura.url }}" alt="book cover" width="max-width: 100%" height="400px">
+                    <img class="panel-img" src="{{ livro.figura.url }}" alt="book cover" width="max-width: 100%"
+                        height="400px">
                     <div class="card-body" style="padding-bottom: 0px;">
                         <h3>{{ livro.nome }}</h3>
                         <h6>{{ livro.autor }}</h6>
                         <p>{{ livro.descricao|truncatechars:70}}</p>
                     </div>
                     {% if user.is_authenticated %}
-                        <div class="card-footer bg-transparent">
-                            <a href="update/{{livro.id}}" class="btn btn-warning">Edit</a>
-                            <a href="delete/{{livro.id}}" class="btn btn-danger">Delete</a>
-                            <a href="download/{{livro.id}}" class="btn btn-success">Download</a>
-                        </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="update/{{livro.id}}" class="btn btn-warning">Edit</a>
+                        <a href="delete/{{livro.id}}" class="btn btn-danger">Delete</a>
+                        <a href="download/{{livro.id}}" class="btn btn-success">Download</a>
+                    </div>
                     {% endif %}
                 </div>
             </div>
+        {% endfor %}
 
-            {% endfor %}
-
-
-        </div>
-        {% endblock %}
-        <!-- partial -->
-        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
-</body>
-
-</html>
+    </div>
+{% endblock %}

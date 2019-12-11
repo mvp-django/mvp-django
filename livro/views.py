@@ -22,6 +22,7 @@ def upload(request):
             return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'index'}}">reload</a>""")
     else:
         return render(request, 'livro/upload_form.html', {'upload_form':upload})
+
 def update_livro(request, livro_id):
     livro_id = int(livro_id)
     try:
@@ -64,5 +65,4 @@ def download(request, livro_id):
 
 def error_404(request, exception):
     data = {}
-    print("pasou")
     return render(request,'error_404.html', data)

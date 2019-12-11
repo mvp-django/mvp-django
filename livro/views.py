@@ -19,9 +19,10 @@ def upload(request):
             upload.save()
             return redirect('index')
         else:
-            return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'index'}}">reload</a>""")
+            #return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'index'}}">reload</a>""")
+            return render(request, 'livro/upload_form.html', {'upload_form':upload, ' error:': upload.errors})
     else:
-        return render(request, 'livro/upload_form.html', {'upload_form':upload})
+        return render(request, 'livro/upload_form.html', {'upload_form':upload, 'titulo':"Upload"})
 
 def update_livro(request, livro_id):
     livro_id = int(livro_id)
@@ -36,7 +37,7 @@ def update_livro(request, livro_id):
         if livro_form.is_valid():
             livro_form.save()
         return redirect('index')
-    return render(request, 'livro/upload_form.html', {'upload_form':livro_form})
+    return render(request, 'livro/upload_form.html', {'upload_form':livro_form, 'titulo':"Update"})
 
 def delete_livro(request, livro_id):
     livro_id = int(livro_id)
@@ -64,5 +65,7 @@ def download(request, livro_id):
     raise Http404
 
 def error_404(request, exception):
-    data = {}
-    return render(request,'error_404.html', data)
+    return render(request,'error.html', {'error':'404'})
+
+def error_500(request):
+    return render(request,'error.html', {'error':'500'})

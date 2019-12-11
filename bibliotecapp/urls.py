@@ -27,4 +27,4 @@ urlpatterns = [
 ]
 
 handler404 = livro_views.error_404
-# handler500 = myapp_views.error_500
+handler500 = livro_views.error_500

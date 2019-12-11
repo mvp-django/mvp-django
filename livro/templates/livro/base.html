@@ -15,11 +15,13 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="">Livros</a>
+                    <a class="nav-link" href="{% url 'index' %}">Livros</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="" class="nav-link">Upload de Livros</a>
+                    <a href="{% url 'upload_livro' %}" class="nav-link">Upload de Livros</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
         <div class="mx-auto order-0">
@@ -30,17 +32,27 @@
         </div>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
+                {% if not user.is_authenticated %}
                 <li class="nav-item">
                     <p class="nav-link" href="#">Olá, visitante, seja bem vindo!</p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Login</a>
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
                 </li>
-
+                {% else %}
+                <li class="nav-item">
+                    <p class="nav-link" href="#">Olá, {{ user.username }}, seja bem vindo!</p>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Sair</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
     <div class="container-fluid">
+        {% block content %}
+        {% endblock %}
     </div>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
 </body>

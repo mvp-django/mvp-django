@@ -9,4 +9,4 @@ class Livro(models.Model):
     email = models.EmailField(blank = True)
     descricao = models.TextField(default = '4Linux Django')
     def __str__(self):
-        return self.name
+        return self.nome

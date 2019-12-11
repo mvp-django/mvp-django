@@ -1,0 +1,17 @@
+{% extends 'livro/base.html' %}
+
+{% block content %}
+    <h1>{{ titulo }}</h1>
+    <form method='POST' enctype='multipart/form-data'>
+        <table>
+            {% csrf_token %}
+            {% if error %}
+                {{ error }}
+            {% endif %}
+            {{ upload_form }}
+        </table>
+        <button type="submit" class="btn btn-warning">
+            Enviar
+        </button>
+    </form>
+{% endblock %}

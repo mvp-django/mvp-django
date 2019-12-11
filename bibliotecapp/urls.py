@@ -22,7 +22,7 @@ from livro import views as livro_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('livro.urls')),
-    path('account/', include('django.contrib.auth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
 ]
 
